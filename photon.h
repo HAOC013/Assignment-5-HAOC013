@@ -1,29 +1,38 @@
-// Filename: Photon.h
-// Purpose: Declares Photon class derived from Particle.
-// Student ID: 
-// Date: April 2025
+// Photon.h
+// Purpose: Header file for the Photon class
+// Student ID: 12345678
+// Date: 2025-04-05
 
 #ifndef PHOTON_H
 #define PHOTON_H
 
-#include "Particle.h"
 #include <vector>
-#include <memory>
+#include "Electron.h"  // Include the Electron class (as it's referenced in pair_production)
 
-class Electron;
-
-class Photon : public Particle
-{
-public:
-  Photon(double energy);
-
-  void print_data() const override;
-
-  void add_electron(const std::shared_ptr<Electron>& electron);
-  const std::vector<std::shared_ptr<Electron>>& get_electrons() const;
-
+class Photon {
 private:
-  std::vector<std::shared_ptr<Electron>> electrons_;
+    double energy;  // Energy of the photon in MeV
+
+public:
+    // Constructor with energy parameter
+    Photon(double energy);
+
+    // Destructor
+    ~Photon();
+
+    // Getter for energy
+    double get_energy() const;
+
+    // Setter for energy
+    void set_energy(double energy);
+
+    // Function to print photon data
+    void print_data() const;
+
+    // Friend function declarations
+    friend double photoelectric_effect(Photon& photon);
+    friend double compton_scattering(Photon& photon);
+    friend std::vector<Electron> pair_production(Photon& photon);
 };
 
 #endif // PHOTON_H

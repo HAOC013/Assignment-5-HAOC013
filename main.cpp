@@ -1,99 +1,65 @@
-// Filename: main.cpp
-// Purpose: Simulate nuclear decays and photon interactions clearly
-// Student ID: 
-// Date: April 2025
+// main.cpp
+// Purpose: Simulate the behavior of radioactive nuclei, photons, and particles.
+// Student ID: 12345678
+// Date: 2025-04-05
 
-#include "StableNucleus.h"
 #include "RadioactiveNucleus.h"
-#include "Interactions.h"
+#include "StableNucleus.h"
+#include "Photon.h"
 #include "Electron.h"
-
-#include <vector>
-#include <memory>
-#include <cmath>
 #include <iostream>
+#include <vector>
 
-int main()
-{
-  std::cout << "=== Initialising Nuclei ===\n";
+int main() {
+  // Create some sample nuclei
+  RadioactiveNucleus co60(27, 60, 5.27, "Co-60");
+  RadioactiveNucleus na22(11, 22, 2.6, "Na-22");
+  StableNucleus fe56(26, 56, "Fe-56");
 
-  // Nuclei using polymorphism
-  std::vector<std::shared_ptr<Nucleus>> nuclei;
+  // Vector to store different nuclei for polymorphism
+  std::vector<Nucleus*> nuclei = { &co60, &na22, &fe56 };
 
-  auto Na = std::make_shared<RadioactiveNucleus>(22.99, 11, "Na", 15.0, std::vector<double>{1274.5});
-  auto Co = std::make_shared<RadioactiveNucleus>(55.0, 27, "Co", 77.0, std::vector<double>{1173.0, 1333.0});
-  auto Cs = std::make_shared<RadioactiveNucleus>(137.0, 55, "Cs", 30.0, std::vector<double>{661.0}); // Correct energy
-  auto Fe = std::make_shared<StableNucleus>(56.0, 26, "Fe");
-
-  nuclei.push_back(Na);
-  nuclei.push_back(Co);
-  nuclei.push_back(Cs);
-  nuclei.push_back(Fe);
-
-  std::cout << "\n=== Decay Process ===\n";
-
-  for (const auto& nucleus : nuclei) {
+  // Decay the radioactive nuclei
+  std::cout << "\n--- Decay Simulation ---\n";
+  for (auto& nucleus : nuclei) {
+    std::cout << "\nProcessing " << nucleus->get_name() << " nucleus:\n";
     nucleus->print_data();
-    nucleus->decay();
-    std::cout << "\n";
-  }
-
-  std::cout << "=== Photon Interactions ===\n";
-
-  // Collect all photons from all radioactive decays
-  std::vector<std::shared_ptr<Photon>> all_photons;
-
-  for (const auto& nucleus : nuclei) {
-    auto rad = std::dynamic_pointer_cast<RadioactiveNucleus>(nucleus);
-    if (rad) {
-      for (const auto& p : rad->emitted_photons_) {
-        all_photons.push_back(p);
-      }
+    if (dynamic_cast<RadioactiveNucleus*>(nucleus)) {
+      std::cout << "This is a radioactive nucleus. Decaying...\n";
+      nucleus->decay();
+    } else {
+      std::cout << "Stable nucleus, no decay.\n";
     }
   }
 
-  // 1. Photon from Cs -> photoelectric effect
-  std::cout << "\n-> Photoelectric Effect on Cs photon:\n";
-  double absorbed_energy = photoelectric_effect(*all_photons[2]);
-  std::cout << "Energy absorbed by matter: " << absorbed_energy << " keV\n";
+  // Simulate photon interaction with matter
+  std::cout << "\n--- Photon Interaction Simulation ---\n";
+  Photon photon(1274.5); // Energy of Na-22 photon
+  std::cout << "Photon energy: " << photon.get_energy() << " keV\n";
+  photon.print_data();
 
-  // 2. Photon from Co -> Compton scatter
-  std::cout << "\n-> Compton Scatter on Co photon:\n";
-  compton_scatter(*all_photons[0], M_PI / 4);
-  all_photons[0]->print_data();
-
-  // 3. Photon from Na -> Pair production (valid)
-  std::cout << "\n-> Pair Production on Na photon:\n";
-  auto pair = pair_production(*all_photons[1]);
-  if (!pair.empty()) {
-    std::cout << "Pair produced: \n";
-    for (const auto& e : pair) {
+  std::cout << "\nAttempting pair production:\n";
+  std::vector<std::shared_ptr<Electron>> electrons = pair_production(photon);
+  if (!electrons.empty()) {
+    std::cout << "Pair production successful. Electrons created:\n";
+    for (auto& e : electrons) {
       e->print_data();
     }
-
-    // Have one electron radiate an unrelated photon
-    std::cout << "\n-> Radiation from produced electron:\n";
-    auto emitted_photon = std::make_shared<Photon>(100.0);
-    pair[0]->add_photon(emitted_photon);
-
-    auto output = pair[0]->radiate();
-    if (output) output->print_data();
+  } else {
+    std::cout << "Pair production failed. Photon energy insufficient.\n";
   }
 
-  // 4. Low energy photon -> failed pair production
-  std::cout << "\n-> Attempt pair production with low energy photon:\n";
-  auto low_energy_photon = std::make_shared<Photon>(0.5);
-  pair_production(*low_energy_photon);
+  // Simulate electron radiating photons
+  std::cout << "\n--- Electron Radiation Simulation ---\n";
+  Electron electron(0.511);
+  std::cout << "Electron initial state:\n";
+  electron.print_data();
+  
+  std::cout << "Electron is radiating a photon...\n";
+  electron.radiate();  // Emit a photon
+  electron.print_data();
 
-  std::cout << "\n=== Positron Emission (Na decay challenge) ===\n";
-  std::cout << "Na decay emits positron (e+) which will annihilate with an electron, producing two 511 keV photons.\n";
-  std::cout << "Creating two annihilation photons:\n";
-  auto ann1 = std::make_shared<Photon>(511.0);
-  auto ann2 = std::make_shared<Photon>(511.0);
-  ann1->print_data();
-  ann2->print_data();
-
-  std::cout << "\n=== Simulation Complete ===\n";
+  std::cout << "\n--- Simulation Ended ---\n";
 
   return 0;
 }
