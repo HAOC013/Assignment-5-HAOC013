@@ -1,7 +1,12 @@
-// Filename: main.cpp
-// Purpose: Full simulation of radioactive decay and interactions (final version).
-// Student ID: 
-// Date: April 2025
+// C++ Assignment 5: main
+// ID: 11010580
+// Date: 19th April 2025
+// This program simulates the behaviour of radioactive and stable nucli, the interactions
+// of photons with matter and the radiation of photons from electons.
+// It demonstrates inheritance (Nucleus/Particle hierarchies), smart pointers (dynamic particle management),
+// and friend functions (for photon interactions and electron radiation).
+
+
 
 #include "radioactivenucleus.h"
 #include "stablenucleus.h"
@@ -10,48 +15,18 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-void simulate_photon_interaction(const std::shared_ptr<Photon>& photon) {
-  // Photoelectric effect
-  std::cout << "  --> Photoelectric effect:\n";
-  double absorbed_energy = photoelectric_effect(*photon);
-  std::cout << "      Energy absorbed: " << absorbed_energy << " MeV\n";
-
-  // Compton scattering
-  std::cout << "  --> Compton scattering:\n";
-  double scattered_energy = compton_scattering(*photon);
-  std::cout << "      Scattered photon energy: " << scattered_energy << " MeV\n";
-
-  // Pair production
-  std::cout << "  --> Attempting pair production:\n";
-  auto electrons = pair_production(*photon);
-  if (!electrons.empty()) {
-    std::cout << "      Pair production successful. Electrons created:\n";
-    for (auto& e : electrons) {
-      std::cout << "        ";
-      e->print_data();
-      std::cout << "        Address: " << e.get() << "\n";
-
-      // Give electron an unrelated photon to radiate
-      auto extra_photon = std::make_shared<Photon>(0.1);
-      e->add_photon(extra_photon);
-
-      auto emitted = radiate(*e);
-      if (emitted) {
-        std::cout << "        Radiated photon with energy: " << emitted->get_energy() << " MeV\n";
-        std::cout << "        Photon address: " << emitted.get() << "\n";
-      }
-    }
-  }
-}
+// Standard and class headers. Two base classes (Nucleus for RadioactiveNucleus and StableNucleus,
+// Particle for Photon and Electron) are also included indirectly through derived class headers.
 
 
 int main() {
-  std::cout << "\n===== Assignment 5: Radioactive Decay & Interactions =====\n";
-  std::cout << "Press Enter to start...";
+  std::cout << "\n===== Assignment 5: Radioactive Decay & Interactions =====\n"; 
+  std::cout << "Press Enter to start..."; // I include this to improve UI
   std::cin.get();
 
-  std::vector<std::shared_ptr<Nucleus>> nuclei;
-
+  std::vector<std::shared_ptr<Nucleus>> nuclei; // Vector to store pointers to Nuclear and any class that inherits from it
+  
+  // Defining test nuclei and storing them in the vector
   nuclei.push_back(std::make_shared<RadioactiveNucleus>(
     137.0, 55, "Cs", 30.17, std::vector<double>{0.661}));
   nuclei.push_back(std::make_shared<RadioactiveNucleus>(
@@ -61,12 +36,14 @@ int main() {
   nuclei.push_back(std::make_shared<StableNucleus>(
     56.0, 26, "Fe"));
 
+// Loops through all test nuclei and uses polymorphism to simulate their decay
   for (const auto& nucleus : nuclei) {
     std::cout << "\n=== Simulating " << nucleus->get_nucleus_type() << " ===\n";
     nucleus->print_data();
-    nucleus->decay();  // decay now handles all pathway and interaction output
+    nucleus->decay();  
   }
 
+// Manual test of electron radiate function
   std::cout << "\n=== Manual Electron Test ===\n";
   Electron test_electron(1.0);
   test_electron.print_data();
@@ -77,6 +54,7 @@ int main() {
     std::cout << "  Electron radiated photon with energy: " << test_radiation->get_energy() << " MeV\n";
   }
 
+// End of output
   std::cout << "\n=== End of Assignment 5 Program ===\n";
   return 0;
 }

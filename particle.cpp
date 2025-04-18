@@ -1,8 +1,7 @@
-// Filename: Particle.cpp
-// Purpose: Implements the Particle base class.
-// Student ID: 
-// Date: April 2025
-
+// C++ Assignment 5: Particle class implementation
+// ID: 11010580
+// Date: 19th April 2025
+//
 #include "particle.h"
 
 Particle::Particle(double rest_mass, double energy)

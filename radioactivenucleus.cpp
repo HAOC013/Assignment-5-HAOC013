@@ -1,7 +1,7 @@
-// Filename: RadioactiveNucleus.cpp
-// Purpose: Implements decay logic and structured pathway simulation.
-// Student ID: 
-// Date: April 2025
+// C++ Assignment 5: RadioactiveNucleus class implementation
+// ID: 11010580
+// Date: 19th April 2025
+//
 
 #include "radioactivenucleus.h"
 #include <iostream>

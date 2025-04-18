@@ -1,7 +1,7 @@
-// Filename: StableNucleus.cpp
-// Purpose: Implements StableNucleus methods and Rule of 5.
-// Student ID: 
-// Date: April 2025
+// C++ Assignment 5: StableNucleus class implmentation
+// ID: 11010580
+// Date: 19th April 2025
+//
 
 #include "stablenucleus.h"
 #include <iostream>

@@ -1,7 +1,7 @@
-// Filename: Particle.h
-// Purpose: Declares base Particle class with mass and energy.
-// Student ID: 
-// Date: April 2025
+// C++ Assignment 5: Particle class header
+// ID: 11010580
+// Date: 19th April 2025
+//
 
 #ifndef PARTICLE_H
 #define PARTICLE_H

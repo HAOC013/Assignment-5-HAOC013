@@ -1,7 +1,7 @@
-// Filename: Nucleus.cpp
-// Purpose: Implementation of the Nucleus class and Rule of 5.
-// Student ID: 
-// Date: April 2025
+// C++ Assignment 5: Nucleus class implementation
+// ID: 11010580
+// Date: 19th April 2025
+//
 
 #include "nucleus.h"
 

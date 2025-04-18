@@ -1,7 +1,8 @@
-// Filename: Electron.cpp
-// Purpose: Implements Electron class and radiation logic via friend function.
-// Student ID: 
-// Date: April 2025
+// C++ Assignment 5: Electron class implementation
+// ID: 11010580
+// Date: 19th April 2025
+// 
+
 
 #include "electron.h"
 #include "photon.h"

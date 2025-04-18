@@ -1,7 +1,7 @@
-// Filename: Photon.cpp
-// Purpose: Implements Photon class and Rule of 5.
-// Student ID: 
-// Date: April 2025
+// C++ Assignment 5: Photon class implementation
+// ID: 11010580
+// Date: 19th April 2025
+//
 
 #include "photon.h"
 #include <iostream>

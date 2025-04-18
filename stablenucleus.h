@@ -1,8 +1,7 @@
-// Filename: StableNucleus.h
-// Purpose: Declares StableNucleus class with Rule of 5.
-// Student ID: 
-// Date: April 2025
-
+// C++ Assignment 5: StableNucleus class header
+// ID: 11010580
+// Date: 19th April 2025
+//
 #ifndef STABLE_NUCLEUS_H
 #define STABLE_NUCLEUS_H
 

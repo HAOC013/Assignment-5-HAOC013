@@ -1,8 +1,7 @@
-// Filename: Electron.h
-// Purpose: Declares Electron class with radiation method as friend function and Rule of 5.
-// Student ID: 
-// Date: April 2025
-
+// C++ Assignment 5: Electron class header
+// ID: 11010580
+// Date: 19th April 2025
+//
 #ifndef ELECTRON_H
 #define ELECTRON_H
 

@@ -1,8 +1,7 @@
-// Filename: Photon.h
-// Purpose: Declares Photon class and implements Rule of 5.
-// Student ID: 
-// Date: April 2025
-
+// C++ Assignment 5: Photon class header
+// ID: 11010580
+// Date: 19th April 2025
+//
 #ifndef PHOTON_H
 #define PHOTON_H
 

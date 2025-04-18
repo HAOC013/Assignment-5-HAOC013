@@ -1,7 +1,7 @@
-// Filename: Nucleus.h
-// Purpose: Declares the base Nucleus class with Rule of 5.
-// Student ID: 
-// Date: April 2025
+// C++ Assignment 5: Nucleus class header
+// ID: 11010580
+// Date: 19th April 2025
+//
 
 #ifndef NUCLEUS_H
 #define NUCLEUS_H

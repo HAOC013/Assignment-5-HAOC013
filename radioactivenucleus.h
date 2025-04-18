@@ -1,7 +1,7 @@
-// Filename: RadioactiveNucleus.h
-// Purpose: Declares RadioactiveNucleus class with decay behavior and Rule of 5.
-// Student ID: 
-// Date: April 2025
+// C++ Assignment 5: RadioactiveNucleus class header
+// ID: 11010580
+// Date: 19th April 2025
+//
 
 #ifndef RADIOACTIVE_NUCLEUS_H
 #define RADIOACTIVE_NUCLEUS_H
