@@ -6,8 +6,7 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
-class Particle
-{
+class Particle {
 public:
   Particle(double rest_mass, double energy);
   virtual ~Particle() = default;

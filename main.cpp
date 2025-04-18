@@ -1,65 +1,82 @@
-// main.cpp
-// Purpose: Simulate the behavior of radioactive nuclei, photons, and particles.
-// Student ID: 12345678
-// Date: 2025-04-05
+// Filename: main.cpp
+// Purpose: Full simulation of radioactive decay and interactions (final version).
+// Student ID: 
+// Date: April 2025
 
-#include "RadioactiveNucleus.h"
-#include "StableNucleus.h"
-#include "Photon.h"
-#include "Electron.h"
+#include "radioactivenucleus.h"
+#include "stablenucleus.h"
+#include "photon.h"
+#include "electron.h"
 #include <iostream>
+#include <memory>
 #include <vector>
+void simulate_photon_interaction(const std::shared_ptr<Photon>& photon) {
+  // Photoelectric effect
+  std::cout << "  --> Photoelectric effect:\n";
+  double absorbed_energy = photoelectric_effect(*photon);
+  std::cout << "      Energy absorbed: " << absorbed_energy << " MeV\n";
+
+  // Compton scattering
+  std::cout << "  --> Compton scattering:\n";
+  double scattered_energy = compton_scattering(*photon);
+  std::cout << "      Scattered photon energy: " << scattered_energy << " MeV\n";
+
+  // Pair production
+  std::cout << "  --> Attempting pair production:\n";
+  auto electrons = pair_production(*photon);
+  if (!electrons.empty()) {
+    std::cout << "      Pair production successful. Electrons created:\n";
+    for (auto& e : electrons) {
+      std::cout << "        ";
+      e->print_data();
+      std::cout << "        Address: " << e.get() << "\n";
+
+      // Give electron an unrelated photon to radiate
+      auto extra_photon = std::make_shared<Photon>(0.1);
+      e->add_photon(extra_photon);
+
+      auto emitted = radiate(*e);
+      if (emitted) {
+        std::cout << "        Radiated photon with energy: " << emitted->get_energy() << " MeV\n";
+        std::cout << "        Photon address: " << emitted.get() << "\n";
+      }
+    }
+  }
+}
+
 
 int main() {
-  // Create some sample nuclei
-  RadioactiveNucleus co60(27, 60, 5.27, "Co-60");
-  RadioactiveNucleus na22(11, 22, 2.6, "Na-22");
-  StableNucleus fe56(26, 56, "Fe-56");
+  std::cout << "\n===== Assignment 5: Radioactive Decay & Interactions =====\n";
+  std::cout << "Press Enter to start...";
+  std::cin.get();
 
-  // Vector to store different nuclei for polymorphism
-  std::vector<Nucleus*> nuclei = { &co60, &na22, &fe56 };
+  std::vector<std::shared_ptr<Nucleus>> nuclei;
 
-  // Decay the radioactive nuclei
-  std::cout << "\n--- Decay Simulation ---\n";
-  for (auto& nucleus : nuclei) {
-    std::cout << "\nProcessing " << nucleus->get_name() << " nucleus:\n";
+  nuclei.push_back(std::make_shared<RadioactiveNucleus>(
+    137.0, 55, "Cs", 30.17, std::vector<double>{0.661}));
+  nuclei.push_back(std::make_shared<RadioactiveNucleus>(
+    22.0, 11, "Na", 2.6, std::vector<double>{1.2745}));
+  nuclei.push_back(std::make_shared<RadioactiveNucleus>(
+    60.0, 27, "Co", 5.27, std::vector<double>{1.173, 1.333}));
+  nuclei.push_back(std::make_shared<StableNucleus>(
+    56.0, 26, "Fe"));
+
+  for (const auto& nucleus : nuclei) {
+    std::cout << "\n=== Simulating " << nucleus->get_nucleus_type() << " ===\n";
     nucleus->print_data();
-    if (dynamic_cast<RadioactiveNucleus*>(nucleus)) {
-      std::cout << "This is a radioactive nucleus. Decaying...\n";
-      nucleus->decay();
-    } else {
-      std::cout << "Stable nucleus, no decay.\n";
-    }
+    nucleus->decay();  // decay now handles all pathway and interaction output
   }
 
-  // Simulate photon interaction with matter
-  std::cout << "\n--- Photon Interaction Simulation ---\n";
-  Photon photon(1274.5); // Energy of Na-22 photon
-  std::cout << "Photon energy: " << photon.get_energy() << " keV\n";
-  photon.print_data();
+  std::cout << "\n=== Manual Electron Test ===\n";
+  Electron test_electron(1.0);
+  test_electron.print_data();
+  test_electron.add_photon(std::make_shared<Photon>(0.25));
 
-  std::cout << "\nAttempting pair production:\n";
-  std::vector<std::shared_ptr<Electron>> electrons = pair_production(photon);
-  if (!electrons.empty()) {
-    std::cout << "Pair production successful. Electrons created:\n";
-    for (auto& e : electrons) {
-      e->print_data();
-    }
-  } else {
-    std::cout << "Pair production failed. Photon energy insufficient.\n";
+  auto test_radiation = radiate(test_electron);
+  if (test_radiation) {
+    std::cout << "  Electron radiated photon with energy: " << test_radiation->get_energy() << " MeV\n";
   }
 
-  // Simulate electron radiating photons
-  std::cout << "\n--- Electron Radiation Simulation ---\n";
-  Electron electron(0.511);
-  std::cout << "Electron initial state:\n";
-  electron.print_data();
-  
-  std::cout << "Electron is radiating a photon...\n";
-  electron.radiate();  // Emit a photon
-  electron.print_data();
-
-  std::cout << "\n--- Simulation Ended ---\n";
-
+  std::cout << "\n=== End of Assignment 5 Program ===\n";
   return 0;
 }

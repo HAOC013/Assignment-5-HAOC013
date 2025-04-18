@@ -1,38 +1,38 @@
-// Photon.h
-// Purpose: Header file for the Photon class
-// Student ID: 12345678
-// Date: 2025-04-05
+// Filename: Photon.h
+// Purpose: Declares Photon class and implements Rule of 5.
+// Student ID: 
+// Date: April 2025
 
 #ifndef PHOTON_H
 #define PHOTON_H
 
+#include "particle.h"
+#include "electron.h"
 #include <vector>
-#include "Electron.h"  // Include the Electron class (as it's referenced in pair_production)
+#include <memory>
 
-class Photon {
-private:
-    double energy;  // Energy of the photon in MeV
-
+class Photon : public Particle {
 public:
-    // Constructor with energy parameter
-    Photon(double energy);
+  Photon(double energy);
+  ~Photon();  // Rule of 5: Destructor
 
-    // Destructor
-    ~Photon();
+  Photon(const Photon& other);  // Rule of 5: Copy constructor
+  Photon& operator=(const Photon& other);  // Rule of 5: Copy assignment
 
-    // Getter for energy
-    double get_energy() const;
+  Photon(Photon&& other) noexcept;  // Rule of 5: Move constructor
+  Photon& operator=(Photon&& other) noexcept;  // Rule of 5: Move assignment
 
-    // Setter for energy
-    void set_energy(double energy);
+  void print_data() const override;
 
-    // Function to print photon data
-    void print_data() const;
+  void add_electron(const std::shared_ptr<Electron>& electron);
+  const std::vector<std::shared_ptr<Electron>>& get_electrons() const;
 
-    // Friend function declarations
-    friend double photoelectric_effect(Photon& photon);
-    friend double compton_scattering(Photon& photon);
-    friend std::vector<Electron> pair_production(Photon& photon);
+  friend double photoelectric_effect(Photon& photon);
+  friend double compton_scattering(Photon& photon);
+  friend std::vector<std::shared_ptr<Electron>> pair_production(Photon& photon);
+
+private:
+  std::vector<std::shared_ptr<Electron>> electrons_;
 };
 
 #endif // PHOTON_H
