@@ -18,6 +18,7 @@
 // Standard and class headers. Two base classes (Nucleus for RadioactiveNucleus and StableNucleus,
 // Particle for Photon and Electron) are also included indirectly through derived class headers.
 
+extern void print_simulation_summary();
 
 int main() {
   std::cout << "\n===== Assignment 5: Radioactive Decay & Interactions =====\n"; 
@@ -43,7 +44,7 @@ int main() {
     nucleus->decay();  
   }
 
-// Manual test of electron radiate function
+// Manual test of electron radiate function see electron class for explanation on implementation
   std::cout << "\n=== Manual Electron Test ===\n";
   Electron test_electron(1.0);
   test_electron.print_data();
@@ -54,6 +55,7 @@ int main() {
     std::cout << "  Electron radiated photon with energy: " << test_radiation->get_energy() << " MeV\n";
   }
 
+print_simulation_summary();              
 // End of output
   std::cout << "\n=== End of Assignment 5 Program ===\n";
   return 0;

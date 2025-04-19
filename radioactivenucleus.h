@@ -1,7 +1,7 @@
-// C++ Assignment 5: RadioactiveNucleus class header
-// ID: 11010580
+// Filename: radioactivenucleus.h
+// Purpose: Declares RadioactiveNucleus class with decay behavior and Rule of 5.
+// Student ID: 11010580
 // Date: 19th April 2025
-//
 
 #ifndef RADIOACTIVE_NUCLEUS_H
 #define RADIOACTIVE_NUCLEUS_H
@@ -10,16 +10,19 @@
 
 class RadioactiveNucleus : public Nucleus {
 public:
-  RadioactiveNucleus(double atomic_mass, int atomic_number, const std::string& nucleus_type,
+  // Constructor
+  RadioactiveNucleus(double atomic_mass, int atomic_number,
+                     const std::string& nucleus_type,
                      double half_life, const std::vector<double>& photon_energies);
-  ~RadioactiveNucleus();  // Rule of 5: Destructor
 
-  RadioactiveNucleus(const RadioactiveNucleus& other);  // Rule of 5: Copy constructor
-  RadioactiveNucleus& operator=(const RadioactiveNucleus& other);  // Copy assignment
+  // Rule of 5
+  ~RadioactiveNucleus();
+  RadioactiveNucleus(const RadioactiveNucleus& other);
+  RadioactiveNucleus& operator=(const RadioactiveNucleus& other);
+  RadioactiveNucleus(RadioactiveNucleus&& other) noexcept;
+  RadioactiveNucleus& operator=(RadioactiveNucleus&& other) noexcept;
 
-  RadioactiveNucleus(RadioactiveNucleus&& other) noexcept;  // Move constructor
-  RadioactiveNucleus& operator=(RadioactiveNucleus&& other) noexcept;  // Move assignment
-
+  // Overridden base class methods
   void decay() override;
   void print_data() const override;
 

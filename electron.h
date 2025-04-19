@@ -26,10 +26,12 @@ public:
 
   void add_photon(const std::shared_ptr<Photon>& photon);
 
-  // Radiate function:
-  // In a realistic simulation, an electron radiates only if it has energy stored as photons.
-  // This function emits the last photon added and removes it from the electron’s photon list.
-  // The number and energy of stored photons are determined externally by the simulation logic.
+// ==== Electron radiation function: Explaining my implementation (as discussed in lab) ====
+// Electron class stores a vector of photons it can emit.
+// The radiate() function returns and removes the most recently added photon.
+// Cannot radiate indefinitely and only emit a photon if available.
+// The number and energy of photons are controlled externally by the simulation logic,
+// One photon per electron added manually for testing.
   friend std::shared_ptr<Photon> radiate(Electron& electron);
 
 private:

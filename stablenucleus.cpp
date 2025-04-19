@@ -1,10 +1,11 @@
-// C++ Assignment 5: StableNucleus class implmentation
-// ID: 11010580
+// Filename: StableNucleus.cpp
+// Purpose: Implements StableNucleus class for assignment 5.
+// Student ID: 11010580
 // Date: 19th April 2025
-//
 
 #include "stablenucleus.h"
 #include <iostream>
+#include <iomanip>
 
 StableNucleus::StableNucleus(double atomic_mass, int atomic_number, const std::string& nucleus_type)
   : Nucleus(atomic_mass, atomic_number, nucleus_type) {}
@@ -31,11 +32,16 @@ StableNucleus& StableNucleus::operator=(StableNucleus&& other) noexcept {
   return *this;
 }
 
-void StableNucleus::decay() {
-  std::cout << "Stable nucleus cannot decay.\n";
+void StableNucleus::print_data() const {
+  std::cout << "=== Nucleus data ===\n";
+  std::cout << "Stable Nucleus: " << nucleus_type_
+            << " (Z=" << atomic_number_
+            << ", A=" << std::fixed << std::setprecision(3) << atomic_mass_ << ")\n";
+  std::cout << "Status: Stable nucleus\n";
 }
 
-void StableNucleus::print_data() const {
-  std::cout << "Stable Nucleus: " << nucleus_type_
-            << " (Z=" << atomic_number_ << ", A=" << atomic_mass_ << ")\n";
+void StableNucleus::decay() {
+  std::cout << "\n==== Decaying " << nucleus_type_ << "...====\n";
+  std::cout << "Error: stable nucleus cannot decay.\n";
 }
+

@@ -44,6 +44,13 @@ void Electron::add_photon(const std::shared_ptr<Photon>& photon) {
   photons_.push_back(photon);
 }
 
+// ==== Electron radiation function: Explaining my implementation (as discussed in lab) ====
+// Electron class stores a vector of photons it can emit.
+// The radiate() function returns and removes the most recently added photon.
+// Cannot radiate indefinitely and only emit a photon if available.
+// The number and energy of photons are controlled externally by the simulation logic,
+// One photon per electron added manually for testing.
+
 std::shared_ptr<Photon> radiate(Electron& electron) {
   if (electron.photons_.empty()) {
     std::cout << "Electron has no photons to radiate.\n";
