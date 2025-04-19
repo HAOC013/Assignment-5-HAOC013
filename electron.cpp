@@ -1,22 +1,28 @@
 // C++ Assignment 5: Electron class implementation
 // ID: 11010580
 // Date: 19th April 2025
-// 
+// Creates an Electron class that inherits from Particle class and simulates photon radiation.
 
-
+// Standard and class headers
 #include "electron.h"
 #include "photon.h"
 #include <iostream>
 #include <utility>
 
+// Defining all 5 special member functions (Rule of 5) for the Electron class
+
+// Constructor to initialise electron rest mass/energy
 Electron::Electron(double energy)
   : Particle(0.511, energy) {}
 
+// Destructor for electron class (default destructor, stated for compleatness)
 Electron::~Electron() = default;
 
+// Copy constructor
 Electron::Electron(const Electron& other)
   : Particle(0.511, other.energy_), photons_(other.photons_) {}
 
+// Copy assignment operator
 Electron& Electron::operator=(const Electron& other) {
   if (this != &other) {
     energy_ = other.energy_;
@@ -24,10 +30,11 @@ Electron& Electron::operator=(const Electron& other) {
   }
   return *this;
 }
-
+// Move constructor
 Electron::Electron(Electron&& other) noexcept
   : Particle(0.511, other.energy_), photons_(std::move(other.photons_)) {}
 
+// Move assignment opertor 
 Electron& Electron::operator=(Electron&& other) noexcept {
   if (this != &other) {
     energy_ = other.energy_;
@@ -36,10 +43,13 @@ Electron& Electron::operator=(Electron&& other) noexcept {
   return *this;
 }
 
+// Displays electron energy
+
 void Electron::print_data() const {
   std::cout << "Electron with energy: " << energy_ << " MeV\n";
 }
 
+// Adds a photon to the electron's vector of photons (See radiate function bellow)
 void Electron::add_photon(const std::shared_ptr<Photon>& photon) {
   photons_.push_back(photon);
 }

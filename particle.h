@@ -1,10 +1,11 @@
 // C++ Assignment 5: Particle class header
 // ID: 11010580
 // Date: 19th April 2025
-//
+// Header file for the Particle class, which serves as a base class for Photon and Electron classes.
 
 #ifndef PARTICLE_H
 #define PARTICLE_H
+
 
 class Particle {
 public:

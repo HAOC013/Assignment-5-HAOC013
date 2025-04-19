@@ -1,7 +1,7 @@
 // C++ Assignment 5: Nucleus class header
 // ID: 11010580
 // Date: 19th April 2025
-//
+// Headers for nuclear base class
 
 #ifndef NUCLEUS_H
 #define NUCLEUS_H
@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+
 
 class Nucleus {
 public:
@@ -29,7 +30,7 @@ public:
   int get_atomic_number() const;
   std::string get_nucleus_type() const;
 
-protected:
+protected: // protected members which are accessible in derived classes
   double atomic_mass_;
   int atomic_number_;
   std::string nucleus_type_;

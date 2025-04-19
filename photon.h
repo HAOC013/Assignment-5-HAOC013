@@ -1,7 +1,7 @@
 // C++ Assignment 5: Photon class header
 // ID: 11010580
 // Date: 19th April 2025
-//
+// Header file for the Photon class, which inherits from the Particle class and simulates photon interactions
 #ifndef PHOTON_H
 #define PHOTON_H
 
@@ -26,10 +26,12 @@ public:
   void add_electron(const std::shared_ptr<Electron>& electron);
   const std::vector<std::shared_ptr<Electron>>& get_electrons() const;
 
+// Friend functions for photon interactions as outlined in brief. Friend functions are used to access private members of the Photon class.
   friend double photoelectric_effect(Photon& photon);
   friend double compton_scattering(Photon& photon);
   friend std::vector<std::shared_ptr<Electron>> pair_production(Photon& photon);
 
+// friend function to simulate photon radiation from an electron
 private:
   std::vector<std::shared_ptr<Electron>> electrons_;
 };

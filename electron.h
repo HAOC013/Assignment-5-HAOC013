@@ -1,10 +1,12 @@
 // C++ Assignment 5: Electron class header
 // ID: 11010580
 // Date: 19th April 2025
-//
+// Declarations necessary for Electron class that inherits from Particle class and simulates photon radiation.
+
 #ifndef ELECTRON_H
 #define ELECTRON_H
 
+// Standard headers and inheritance from particle class
 #include "particle.h"
 #include <vector>
 #include <memory>
